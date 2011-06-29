@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.jfeed.pack.js"></script>
+<script type="text/javascript">
+/* move to seperate file later*/
+
+com={};
+if(!com.icliao){com.icliao={};}
+
+com.icliao.EVENTS = {
+	"FETCH_SUCCESS":"ic.icliao.fetcher.success",
+	"FETCH_FAIL":"ic.icliao.fetcher.fail"
+}
+
+com.icliao.abstractEventObj = function(){
+	eventListeners = {},
+	this.addEventListener= function(eventType, el){
+		var els = eventListeners[eventType];
+		if(!els)els=[];
+		els.push(el);
+		eventListeners[eventType] = els;
+	},
+	this.fireEvent = function(eventType, eventArg){
+		var els = eventListeners[eventType];
+		if(els){
+			var i = els.length;
+			while(i--)els[i].fire(eventArg);
+		}
+	}
+}
+
+com.icliao.feedFetcher = function(){
+	this.addOnSuccessListener = function(el){
+		this.addEventListener(com.icliao.EVENTS.FETCH_SUCCESS, el);
+	},
+	this.addOnFailListener = function(el){
+		this.addEventListener(com.icliao.EVENTS.FETCH_FAIL, el);
+	},
+	fetchSuccess = function(arg){
+		this.fireEvent(com.icliao.EVENTS.FETCH_SUCCESS,arg);
+	},
+	this.fetchFail = function(arg){
+		this.fireEvent(com.icliao.EVENTS.FETCH_FAIL,arg);
+	},
+	this.fetch = function(url){
+		$.get(FEED_URL,{},
+			function(data){
+			parseFEED(data);
+			});
+	}
+}
+
+com.icliao.feedParser = function(){}
+
+com.icliao.feedModel = function(){
+	feeds = {},
+	this.getFeeds = function(){
+		return feeds;
+	},
+	this.setFeeds = function(fds){
+		feeds = fds;
+		this.fireEvent("setfeeds", fds);
+	},
+	this.getFeedAtIndex = function(index){
+		return feeds[index];
+	},
+	this.getCount = function(){
+		return feeds.length;
+	}
+}
+
+com.icliao.feedModel.prototype = new com.icliao.abstractEventObj;
+</script>
+<script text="text/javascript">
+/* move this unit testing to seperate & use a framework*/
+
+function runTests(){
+	testFeedsModel();
+	//testEventListener();
+}
+
+function testEventListener(){
+	el = {"fire":function(arg){console.log(arg);}};
+	obj = new com.icliao.feedModel();
+	obj.addEventListener("click",el);
+	obj.fireEvent("click", "X");
+}
+
+function testFeedsModel(){
+	var model = new com.icliao.feedModel();
+	el = {"fire":function(arg){console.log(arg);}};
+	//model.addEventListener("setfeeds",el);
+	model.setFeeds(["a","b","c"]);
+	console.log(model.getCount());
+}
+
+</script>
+<script type="text/javascript">
+
+var FEED_URL="xml/rss.xml";//"http://lookbook.nu/rss";
+
+var debug;
+
+function parseFEED(data){
+    var $xml = $( data );
+	/*
+	<title>20110628</title>
+  <link>http://lookbook.nu/look/2086783-2-11-628</link>
+  <dc:creator>Lina E</dc:creator>
+    <pubDate>2011-06-29 06:50:50 UTC</pubDate>
+    <imageSrc>http://cdn4.lookbook.nu/files/looks/medium/2011/06/28/1368924_o-matich.jpg?1309285346</imageSrc>
+    <description>
+    <![CDATA[<a href="http://lookbook.nu/look/2086783-2-11-628"><img alt="1368924_o-matich" src="http://cdn4.lookbook.nu/files/looks/medium/2011/06/28/1368924_o-matich.jpg?1309285346" /></a>]]>
+  </description>
+	*/
+    var $title = $xml.find( "item" ).each(function(){
+		$(this).children().each(function(){
+			console.log(this.tagName+":-:"+$(this).text());
+		});
+	});
+}
+
+$(document).ready(function(){
+	/*$.get(FEED_URL,{},
+   function(data){
+    parseFEED(data);
+   });*/
+   runTests();
+});
+
+
+
+</script>
+</head>
+<body>
+	working
+</body>
+</html>
