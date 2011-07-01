@@ -47,9 +47,9 @@ com.icliao.feedParser = function(){
 		this.fireEvent(com.icliao.EVENTS.feed.PARSE_FAIL,arg);
 	},
 	this.parse = function(data){
-		var r = [], h = this;
+		var r = [];
 		var $xml = $( data );
-		var $title = $xml.find( "item" ).each(function(){
+		var item = $xml.find( "item" ).each(function(){
 			var o = {};
 			$(this).children().each(function(){
 				o[this.tagName] = $(this).text();
@@ -69,7 +69,7 @@ com.icliao.feedModel = function(){
 		feeds = fds;
 		this.fireEvent(com.icliao.EVENTS.feed.SET_FFEDS, fds);
 	},
-	this.getFeedAtIndex = function(index){
+	this.atIndex = function(index){
 		return feeds[index];
 	},
 	this.getCount = function(){

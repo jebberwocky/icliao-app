@@ -7,6 +7,7 @@ com={};
 if(!com.icliao){com.icliao={};}
 
 com.icliao.EVENTS = {};
+com.icliao.CONST = {};
 
 com.icliao.abstractEventObj = function(){
 	eventListeners = {},
