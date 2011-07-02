@@ -25,3 +25,10 @@ com.icliao.abstractEventObj = function(){
 		}
 	}
 }
+
+com.icliao.abstractEventListener = function(callback){
+	_callback = callback,
+	fire = function(arg){
+		_callback(arg);
+	}
+}

@@ -1,0 +1,19 @@
+<html>
+<head>
+	<script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+	<script text="text/javascript" src="js/com.icliao.evt.js"></script>
+	<script text="text/javascript" src="js/com.icliao.color.js"></script>
+	<script text="text/javascript">
+	
+	var sort = new com.icliao.colorBucketSort();
+	
+	sort.addOnSuccessListener({"fire":function(data){
+		console.log(data);
+	}});
+	
+	sort.request("http://www.google.com/images/logos/ps_logo2.png");
+	
+	</script>
+</head>
+<body></body>
+</html>
