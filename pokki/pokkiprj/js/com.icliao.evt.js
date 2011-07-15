@@ -10,25 +10,18 @@ com.icliao.EVENTS = {};
 com.icliao.CONST = {};
 
 com.icliao.abstractEventObj = function(){
-	eventListeners = {},
+	this.eventListeners = {},
 	this.addEventListener= function(eventType, el){
-		var els = eventListeners[eventType];
+		var els = this.eventListeners[eventType];
 		if(!els)els=[];
 		els.push(el);
-		eventListeners[eventType] = els;
+		this.eventListeners[eventType] = els;
 	},
 	this.fireEvent = function(eventType, eventArg){
-		var els = eventListeners[eventType];
+		var els = this.eventListeners[eventType];
 		if(els){
 			var i = els.length;
 			while(i--)els[i].fire(eventArg);
 		}
-	}
-}
-
-com.icliao.abstractEventListener = function(callback){
-	_callback = callback,
-	fire = function(arg){
-		_callback(arg);
 	}
 }

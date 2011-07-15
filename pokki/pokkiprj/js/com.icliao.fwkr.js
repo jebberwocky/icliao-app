@@ -10,15 +10,15 @@ com.icliao.EVENTS.worker={
 }
 
 com.icliao.worker = function(){
-	intervalId = "",
+	this.intervalId = "",
 	this.name ="",
 	this.delay=1000,
 	this.debug_counter = 0,
 	this.isStop = false,
 	this.start = function(){
 		var o = this;
-		isStop = false;
-		intervalId = setInterval(
+		this.isStop = false;
+		this.intervalId = setInterval(
 			function() { 
 				o.tick();
 				o.debug_counter++;
@@ -28,8 +28,8 @@ com.icliao.worker = function(){
 	},
 	this.stop = function(){
 		var o = this;
-		isStop = true;
-		clearInterval(intervalId);
+		this.isStop = true;
+		clearInterval(this.intervalId);
 		this.fireStopEvent(this);
 	},
 	this.tick = function(){

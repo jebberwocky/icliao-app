@@ -1,7 +1,3 @@
-/**
- * The wrapper classes for request color sorting server
- * @author jeff liu, jebberwocky@gmail.com
- */
 com.icliao.EVENTS.color  = {
 	"FETCH_SUCCESS":"com.icliao.color.success",
 	"FETCH_FAIL":"com.icliao.color.fail"

@@ -61,19 +61,19 @@ com.icliao.feedParser = function(){
 }
 
 com.icliao.feedModel = function(){
-	feeds = {},
+	this.feeds = {},
 	this.getFeeds = function(){
-		return feeds;
+		return this.feeds;
 	},
 	this.setFeeds = function(fds){
-		feeds = fds;
+		this.feeds = fds;
 		this.fireEvent(com.icliao.EVENTS.feed.SET_FFEDS, fds);
 	},
 	this.atIndex = function(index){
-		return feeds[index];
+		return this.feeds[index];
 	},
 	this.getCount = function(){
-		return feeds.length;
+		return this.feeds.length;
 	},
 	this.addSetFeedsListener = function(el){
 		this.addEventListener(com.icliao.EVENTS.feed.SET_FFEDS, el);
